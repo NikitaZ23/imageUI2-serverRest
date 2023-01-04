@@ -1,0 +1,9 @@
+databaseChangeLog:
+#  - includeAll:
+#      path: classpath:/db/changelog/
+  - include:
+      file: classpath:/db/changelog/images-table.yaml
+  - include:
+      file: classpath:/db/changelog/tags-table.yaml
+  - include:
+      file: classpath:/db/changelog/imagewithtag-table.yaml

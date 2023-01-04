@@ -1,0 +1,38 @@
+databaseChangeLog:
+  - changeSet:
+      id: 0
+      author: Nikita.Zachvatov
+      failOnError: true
+      comment: "Create table tags"
+      changes:
+        - createSequence:
+            sequenceName: hibernate_sequence_tg
+            incrementBy: 1
+            cycle: false
+            cacheSize: 1
+            minValue: 1
+            startValue: 1
+        - createTable:
+            tableName: tags
+            columns:
+              - column:
+                  name: uuid
+                  type: UUID
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(100)
+              - column:
+                  name: created
+                  type: datetime
+              - column:
+                  name: modified
+                  type: datetime
+        - addPrimaryKey:
+            columnNames: id
+            tableName: tags
