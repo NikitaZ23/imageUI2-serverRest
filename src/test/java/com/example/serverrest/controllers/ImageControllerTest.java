@@ -83,7 +83,7 @@ public class ImageControllerTest {
     public void createImageTest() {
         MockMultipartFile file
                 = new MockMultipartFile(
-                "file",
+                "hello.txt",
                 "hello.txt",
                 "text/plain",
                 "Hello, World!".getBytes()

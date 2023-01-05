@@ -2,6 +2,7 @@ package com.example.serverrest.service.Imp;
 
 import com.example.serverrest.domain.ImWithTags;
 import com.example.serverrest.domain.Tag;
+import com.example.serverrest.dto.TagDto;
 import com.example.serverrest.dto.request.CreateIWTRequest;
 import com.example.serverrest.dto.request.CreateTagRequest;
 import com.example.serverrest.exceptions.IWTNotFoundExceptions;
@@ -43,14 +44,14 @@ public class ImWithTagsServiceImp implements ImWithTagsService {
     @Transactional
     public void deleteBy_IdIm(int id_im) {
         Iterable<ImWithTags> imWithTags = repository.findById_Im(id_im);
-        imWithTags.forEach(repository::delete);
+        repository.deleteAll(imWithTags);
     }
 
     @Override
     @Transactional
     public void deleteBy_IdTg(int id_tg) {
         Iterable<ImWithTags> imWithTags = repository.findById_Tg(id_tg);
-        imWithTags.forEach(repository::delete);
+        repository.deleteAll(imWithTags);
     }
 
     @Override
@@ -75,14 +76,6 @@ public class ImWithTagsServiceImp implements ImWithTagsService {
     @Override
     public Optional<ImWithTags> findByUuid(UUID id) {
         return repository.findByUuid(id);
-    }
-
-    @Override
-    public List<Tag> getTags(int id_im) {
-        List<Tag> tags = new ArrayList<>();
-        findById_Im(id_im).forEach(imWithTags -> tags.add(imWithTags.getId_tg()));
-
-        return tags;
     }
 
     @Override

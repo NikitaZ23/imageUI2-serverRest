@@ -31,7 +31,7 @@ public class ImageController {
 
     @PostMapping
     @ResponseStatus(code = HttpStatus.CREATED)
-    public ImageDto createImage(@RequestParam("user-file") MultipartFile file) {
+    public ImageDto createImage(@RequestParam("file") MultipartFile file) {
         return mapper.map(imageServiceImp.createImage(file));
     }
 
@@ -39,6 +39,20 @@ public class ImageController {
     @ResponseStatus(code = HttpStatus.OK)
     public ImageDto findById(@PathVariable("uuid") final UUID uuid) {
         Image image = imageServiceImp.findByUuid(uuid).orElseThrow(() -> new ImageNotFoundRestException(IMAGE_NOT_FOUND));
+        return mapper.map(image);
+    }
+
+    @GetMapping("/im/{name}")
+    @ResponseStatus(code = HttpStatus.OK)
+    public ImageDto findByName(@PathVariable("name") final String name) {
+        Image image = imageServiceImp.findByName(name).orElseThrow(() -> new ImageNotFoundRestException(IMAGE_NOT_FOUND));
+        return mapper.map(image);
+    }
+
+    @GetMapping("/id/{id}")
+    @ResponseStatus(code = HttpStatus.OK)
+    public ImageDto findById(@PathVariable("id") final int id) {
+        Image image = imageServiceImp.findById(id).orElseThrow(() -> new ImageNotFoundRestException(IMAGE_NOT_FOUND));
         return mapper.map(image);
     }
 

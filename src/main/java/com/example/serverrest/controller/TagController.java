@@ -37,6 +37,21 @@ public class TagController {
         return mapper.map(tagServiceImp.findAll());
     }
 
+    @GetMapping("/tg/{tagId}")
+    @ResponseStatus(code = HttpStatus.OK)
+    public TagDto findTagId(@PathVariable("tagId") final int id) {
+        Tag tag = tagServiceImp.findById(id).orElseThrow(() -> new TagNotFoundRestException(TAG_NOT_FOUND));
+        return mapper.map(tag);
+    }
+
+    @GetMapping("/name/{tagName}")
+    @ResponseStatus(code = HttpStatus.OK)
+    public TagDto findTagName(@PathVariable("tagName") final String name) {
+        Tag tag = tagServiceImp.findByName(name).orElseThrow(() -> new TagNotFoundRestException(TAG_NOT_FOUND));
+        return mapper.map(tag);
+    }
+
+
     @DeleteMapping("/{tagId}")
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
     public void deleteTag(@PathVariable("tagId") final UUID uuid) {

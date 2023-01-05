@@ -51,22 +51,6 @@ public class IWTServiceTest {
     }
 
     @Test
-    @DisplayName("Проверка получения тегов по id картинки")
-    public void findAllTagTest() {
-        Tag tag = new Tag("tag");
-        Tag tag2 = new Tag("tag2");
-
-        ImWithTags iwt1 = new ImWithTags(1, tag);
-        ImWithTags iwt2 = new ImWithTags(1, tag2);
-
-        Mockito.when(repository.findById_Im(Mockito.anyInt())).thenReturn(Arrays.asList(iwt1, iwt2));
-
-        List<Tag> tags = service.getTags(1);
-
-        assertThat(tags).isEqualTo(Arrays.asList(tag, tag2));
-    }
-
-    @Test
     @DisplayName("Проверка поиска по uuid")
     public void findByUuidTest() {
         ImWithTags iwt1 = new ImWithTags(1, new Tag("tag"));

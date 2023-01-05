@@ -21,8 +21,6 @@ public interface ImWithTagsService {
 
     void createIWT(int id_im, List<String> tags);
 
-    List<Tag> getTags(int id_im);
-
     ImWithTags createIWT(CreateIWTRequest request);
 
     void deleteBy_IdIm(int id_im);

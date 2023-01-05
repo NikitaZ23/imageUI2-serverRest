@@ -69,7 +69,7 @@ public class ImageServiceImp implements ImageService {
         byte[] bytes = multipartFile.getBytes();
         String name = multipartFile.getOriginalFilename();
 
-        File file = new File(name);
+        File file = new File("pictures/" + name);
 
         BufferedOutputStream stream =
                 new BufferedOutputStream(new FileOutputStream(file));
