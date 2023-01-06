@@ -75,6 +75,13 @@ public class IWTController {
         serviceImp.createIWT(id, list);
     }
 
+    @PutMapping("/{id}")
+    @ResponseStatus(code = HttpStatus.OK)
+    public void updateDependences(@Valid @RequestBody final List<String> list,
+                                  @PathVariable("id") final int id) {
+        serviceImp.updateIWT(id, list);
+    }
+
     @DeleteMapping("/{uuid}")
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
     public void deleteDependence(@PathVariable("uuid") final UUID uuid) {
