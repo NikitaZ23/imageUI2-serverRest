@@ -2,8 +2,10 @@ package com.example.serverrest.controller;
 
 import com.example.serverrest.domain.ImWithTags;
 import com.example.serverrest.dto.ImWithTagsDto;
+import com.example.serverrest.dto.ImageDto;
 import com.example.serverrest.dto.TagDto;
 import com.example.serverrest.dto.request.CreateIWTRequest;
+import com.example.serverrest.dto.request.CreateImageRequest;
 import com.example.serverrest.dto.request.FindIWTRequest;
 import com.example.serverrest.exceptions.IWTNotFoundRestException;
 import com.example.serverrest.exceptions.ImageNotFoundExceptions;
@@ -64,6 +66,13 @@ public class IWTController {
     @ResponseStatus(code = HttpStatus.CREATED)
     public ImWithTagsDto createDependence(@Valid @RequestBody final CreateIWTRequest request) {
         return mapper.map(serviceImp.createIWT(request));
+    }
+
+    @PostMapping("/{id}")
+    @ResponseStatus(code = HttpStatus.OK)
+    public void createDependences(@Valid @RequestBody final List<String> list,
+                                @PathVariable("id") final int id) {
+        serviceImp.createIWT(id, list);
     }
 
     @DeleteMapping("/{uuid}")

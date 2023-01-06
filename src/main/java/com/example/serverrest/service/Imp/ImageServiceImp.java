@@ -1,7 +1,6 @@
 package com.example.serverrest.service.Imp;
 
 import com.example.serverrest.common.ImaggaVision;
-import com.example.serverrest.controller.ImageController;
 import com.example.serverrest.domain.Image;
 import com.example.serverrest.dto.request.CreateImageRequest;
 import com.example.serverrest.exceptions.ImageNotFoundExceptions;

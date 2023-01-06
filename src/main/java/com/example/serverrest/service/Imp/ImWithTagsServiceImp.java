@@ -2,7 +2,6 @@ package com.example.serverrest.service.Imp;
 
 import com.example.serverrest.domain.ImWithTags;
 import com.example.serverrest.domain.Tag;
-import com.example.serverrest.dto.TagDto;
 import com.example.serverrest.dto.request.CreateIWTRequest;
 import com.example.serverrest.dto.request.CreateTagRequest;
 import com.example.serverrest.exceptions.IWTNotFoundExceptions;

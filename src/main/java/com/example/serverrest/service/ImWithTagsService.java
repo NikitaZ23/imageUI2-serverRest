@@ -1,7 +1,6 @@
 package com.example.serverrest.service;
 
 import com.example.serverrest.domain.ImWithTags;
-import com.example.serverrest.domain.Tag;
 import com.example.serverrest.dto.request.CreateIWTRequest;
 
 import java.util.List;
