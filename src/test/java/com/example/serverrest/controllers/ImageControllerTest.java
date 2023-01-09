@@ -61,6 +61,36 @@ public class ImageControllerTest {
 
     @SneakyThrows
     @Test
+    @DisplayName("Получение картинки по ид")
+    public void getImageIdTest() {
+        Image image = new Image("name");
+
+        Mockito.when(service.findById(Mockito.anyInt())).thenReturn(Optional.of(image));
+
+        mockMvc.perform(
+                        get("/images/id/1")
+                )
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.name").value("name"));
+    }
+
+    @SneakyThrows
+    @Test
+    @DisplayName("Получение картинки по имени")
+    public void getImageNameTest() {
+        Image image = new Image("name");
+
+        Mockito.when(service.findByName(Mockito.any())).thenReturn(Optional.of(image));
+
+        mockMvc.perform(
+                        get("/images/im/name")
+                )
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.name").value("name"));
+    }
+
+    @SneakyThrows
+    @Test
     @DisplayName("Получение картинок")
     public void getImagesTest() {
         Image image = new Image("1");
@@ -83,15 +113,15 @@ public class ImageControllerTest {
     public void createImageTest() {
         MockMultipartFile file
                 = new MockMultipartFile(
+                "file",
                 "hello.txt",
-                "hello.txt",
-                "text/plain",
+                MediaType.TEXT_PLAIN_VALUE,
                 "Hello, World!".getBytes()
         );
 
         MockMvc mockMvc
                 = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
-        mockMvc.perform(multipart("/images/").file(file))
+        mockMvc.perform(multipart("/images").file(file))
                 .andExpect(status().isCreated());
     }
 

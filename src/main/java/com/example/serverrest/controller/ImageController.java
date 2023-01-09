@@ -37,7 +37,7 @@ public class ImageController {
 
     @GetMapping("/{uuid}")
     @ResponseStatus(code = HttpStatus.OK)
-    public ImageDto findById(@PathVariable("uuid") final UUID uuid) {
+    public ImageDto findByUUID(@PathVariable("uuid") final UUID uuid) {
         Image image = imageServiceImp.findByUuid(uuid).orElseThrow(() -> new ImageNotFoundRestException(IMAGE_NOT_FOUND));
         return mapper.map(image);
     }

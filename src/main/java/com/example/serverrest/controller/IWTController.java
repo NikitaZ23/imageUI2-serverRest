@@ -2,10 +2,7 @@ package com.example.serverrest.controller;
 
 import com.example.serverrest.domain.ImWithTags;
 import com.example.serverrest.dto.ImWithTagsDto;
-import com.example.serverrest.dto.ImageDto;
-import com.example.serverrest.dto.TagDto;
 import com.example.serverrest.dto.request.CreateIWTRequest;
-import com.example.serverrest.dto.request.CreateImageRequest;
 import com.example.serverrest.dto.request.FindIWTRequest;
 import com.example.serverrest.exceptions.IWTNotFoundRestException;
 import com.example.serverrest.exceptions.ImageNotFoundExceptions;
@@ -37,25 +34,26 @@ public class IWTController {
 
     @GetMapping("/{uuid}")
     @ResponseStatus(code = HttpStatus.OK)
-    public ImWithTagsDto findImageTags(@PathVariable("uuid") final UUID id) {
+    public ImWithTagsDto findImageTag(@PathVariable("uuid") final UUID id) {
         ImWithTags imWithTags = serviceImp.findByUuid(id).orElseThrow(() -> new IWTNotFoundRestException(DEPENDENCE_NOT_FOUND));
         return mapper.map(imWithTags);
     }
+
     @GetMapping("/im/{id}")
     @ResponseStatus(code = HttpStatus.OK)
-    public Iterable<ImWithTagsDto> findTags(@PathVariable("id") final int imageId){
+    public Iterable<ImWithTagsDto> findTags(@PathVariable("id") final int imageId) {
         return mapper.map(serviceImp.findById_Im(imageId));
     }
 
     @GetMapping("/tg/{id}")
     @ResponseStatus(code = HttpStatus.OK)
-    public Iterable<ImWithTagsDto> findImages(@PathVariable("id") final int tagId){
+    public Iterable<ImWithTagsDto> findImages(@PathVariable("id") final int tagId) {
         return mapper.map(serviceImp.findById_Tg(tagId));
     }
 
     @GetMapping("/oneOb")
     @ResponseStatus(code = HttpStatus.OK)
-    public ImWithTagsDto findByOneObject(@Valid @RequestBody final FindIWTRequest request){
+    public ImWithTagsDto findByOneObject(@Valid @RequestBody final FindIWTRequest request) {
         System.out.println(request);
         ImWithTags imWithTags = serviceImp.findByOneObject(request.getId_im(), request.getId_tg()).orElseThrow(() -> new IWTNotFoundRestException(DEPENDENCE_NOT_FOUND));
         System.out.println(imWithTags);
@@ -71,7 +69,7 @@ public class IWTController {
     @PutMapping("/{id}")
     @ResponseStatus(code = HttpStatus.OK)
     public Iterable<ImWithTagsDto> updateDependences(@Valid @RequestBody final List<String> list,
-                                  @PathVariable("id") final int id) {
+                                                     @PathVariable("id") final int id) {
         return mapper.map(serviceImp.updateIWT(id, list));
     }
 

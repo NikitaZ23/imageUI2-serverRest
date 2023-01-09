@@ -5,6 +5,7 @@ import com.example.serverrest.domain.ImWithTags;
 import com.example.serverrest.domain.Tag;
 import com.example.serverrest.dto.ImWithTagsDto;
 import com.example.serverrest.dto.request.CreateIWTRequest;
+import com.example.serverrest.dto.request.FindIWTRequest;
 import com.example.serverrest.service.Imp.ImWithTagsServiceImp;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
@@ -25,6 +26,7 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
@@ -43,8 +45,8 @@ public class IWTControllerTest {
 
     @SneakyThrows
     @Test
-    @DisplayName("Получение зависимости")
-    public void getIWTTest() {
+    @DisplayName("Получение зависимости по uuid")
+    public void getIWTUUIDTest() {
         ImWithTags im = new ImWithTags(1, new Tag("tag"));
 
         Mockito.when(service.findByUuid(Mockito.any())).thenReturn(Optional.of(im));
@@ -57,23 +59,80 @@ public class IWTControllerTest {
                 .andExpect(jsonPath("$.id_tg").value(0));
     }
 
-//    @SneakyThrows
-//    @Test
-//    @DisplayName("Получение зависимостей")
-//    public void getTagsTest() {
-//        ImWithTags im = new ImWithTags(1, new Tag("tag"));
-//        ImWithTags im2 = new ImWithTags(1, new Tag("tag2"));
-//
-//        Mockito.when(service.findAll()).thenReturn(Arrays.asList(im, im2));
-//
-//        mockMvc.perform(
-//                        get("/iwt/")
-//                )
-//                .andExpect(status().isOk())
-//                .andExpect(content().json(objectMapper.writeValueAsString(Arrays.asList(
-//                        new ImWithTagsDto(im.getId(), im.getId_im(), im.getId_tg().getId()),
-//                        new ImWithTagsDto(im2.getId(), im2.getId_im(), im2.getId_tg().getId())))));
-//    }
+    @SneakyThrows
+    @Test
+    @DisplayName("Получение зависимостей по id image")
+    public void getIWTId_ImTest() {
+        ImWithTags im = new ImWithTags(1, new Tag("tag"));
+        ImWithTags im2 = new ImWithTags(1, new Tag("tag2"));
+
+        Mockito.when(service.findById_Im(Mockito.anyInt())).thenReturn(Arrays.asList(im, im2));
+
+        mockMvc.perform(
+                        get("/iwt/im/1")
+                )
+                .andExpect(status().isOk())
+                .andExpect(content().json(objectMapper.writeValueAsString(Arrays.asList(
+                        new ImWithTagsDto(im.getId(), im.getUuid(), im.getId_im(), im.getId_tg().getId()),
+                        new ImWithTagsDto(im2.getId(), im2.getUuid(), im2.getId_im(), im2.getId_tg().getId())))));
+    }
+
+    @SneakyThrows
+    @Test
+    @DisplayName("Получение зависимостей по id тега")
+    public void getIWTId_TgTest() {
+        ImWithTags im = new ImWithTags(1, new Tag("tag"));
+        ImWithTags im2 = new ImWithTags(1, new Tag("tag2"));
+
+        Mockito.when(service.findById_Tg(Mockito.anyInt())).thenReturn(Arrays.asList(im, im2));
+
+        mockMvc.perform(
+                        get("/iwt/tg/1")
+                )
+                .andExpect(status().isOk())
+                .andExpect(content().json(objectMapper.writeValueAsString(Arrays.asList(
+                        new ImWithTagsDto(im.getId(), im.getUuid(), im.getId_im(), im.getId_tg().getId()),
+                        new ImWithTagsDto(im2.getId(), im2.getUuid(), im2.getId_im(), im2.getId_tg().getId())))));
+
+    }
+
+    @SneakyThrows
+    @Test
+    @DisplayName("Получение зависимости по id картинки и тега")
+    public void getIWTOneObjectTest() {
+        ImWithTags im = new ImWithTags(1, new Tag("tag"));
+
+        Mockito.when(service.findByOneObject(Mockito.anyInt(), Mockito.anyInt())).thenReturn(Optional.of(im));
+
+        FindIWTRequest request = new FindIWTRequest(1, 0);
+
+        mockMvc.perform(
+                        get("/iwt/oneOb/")
+                                .content(objectMapper.writeValueAsString(request))
+                                .contentType(MediaType.APPLICATION_JSON)
+                )
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id_im").value(1))
+                .andExpect(jsonPath("$.id_tg").value(0));
+    }
+
+    @SneakyThrows
+    @Test
+    @DisplayName("Получение зависимостей")
+    public void getTagsTest() {
+        ImWithTags im = new ImWithTags(1, new Tag("tag"));
+        ImWithTags im2 = new ImWithTags(1, new Tag("tag2"));
+
+        Mockito.when(service.findAll()).thenReturn(Arrays.asList(im, im2));
+
+        mockMvc.perform(
+                        get("/iwt/")
+                )
+                .andExpect(status().isOk())
+                .andExpect(content().json(objectMapper.writeValueAsString(Arrays.asList(
+                        new ImWithTagsDto(im.getId(), im.getUuid(), im.getId_im(), im.getId_tg().getId()),
+                        new ImWithTagsDto(im2.getId(), im2.getUuid(), im2.getId_im(), im2.getId_tg().getId())))));
+    }
 
     @Test
     @SneakyThrows

@@ -17,7 +17,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
-import org.testcontainers.shaded.com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.Arrays;
 import java.util.Optional;
@@ -50,6 +50,36 @@ public class TagControllerTest {
 
         mockMvc.perform(
                         get("/tags/7207d531-0e01-4cd0-ba0a-02f7c0c8fb2d")
+                )
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.name").value("tag"));
+    }
+
+    @SneakyThrows
+    @Test
+    @DisplayName("Получение тега по имени")
+    public void getTagNameTest() {
+        Tag tag = new Tag("tag");
+
+        Mockito.when(service.findByName(Mockito.any())).thenReturn(Optional.of(tag));
+
+        mockMvc.perform(
+                        get("/tags/name/tag")
+                )
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.name").value("tag"));
+    }
+
+    @SneakyThrows
+    @Test
+    @DisplayName("Получение тега по id")
+    public void getTagIdTest() {
+        Tag tag = new Tag("tag");
+
+        Mockito.when(service.findById(Mockito.anyInt())).thenReturn(Optional.of(tag));
+
+        mockMvc.perform(
+                        get("/tags/tg/1")
                 )
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name").value("tag"));
