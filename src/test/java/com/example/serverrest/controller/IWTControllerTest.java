@@ -1,4 +1,4 @@
-package com.example.serverrest.controllers;
+package com.example.serverrest.controller;
 
 import com.example.serverrest.configuration.ConfigurationTests;
 import com.example.serverrest.domain.ImWithTags;
@@ -26,7 +26,6 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest

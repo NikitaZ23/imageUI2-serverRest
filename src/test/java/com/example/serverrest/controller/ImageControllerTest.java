@@ -1,4 +1,4 @@
-package com.example.serverrest.controllers;
+package com.example.serverrest.controller;
 
 import com.example.serverrest.configuration.ConfigurationTests;
 import com.example.serverrest.domain.Image;
