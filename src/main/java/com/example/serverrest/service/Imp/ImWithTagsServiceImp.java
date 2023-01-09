@@ -32,18 +32,20 @@ public class ImWithTagsServiceImp implements ImWithTagsService {
         List<Tag> list = new ArrayList<>();
 
         tags.forEach(tag -> list.add(tagService.createTag(new CreateTagRequest(tag))));
-        deleteBy_IdIm(id_im);
+
         list.forEach(tag -> createIWT(new CreateIWTRequest(id_im, tag)));
     }
 
     @Override
     @Transactional
-    public void updateIWT(int id_im, List<String> tags) {
+    public Iterable<ImWithTags> updateIWT(int id_im, List<String> tags) {
         List<Tag> list = new ArrayList<>();
 
         tags.forEach(tag -> list.add(tagService.createTag(new CreateTagRequest(tag))));
 
         list.forEach(tag -> createIWT(new CreateIWTRequest(id_im, tag)));
+
+        return findById_Im(id_im);
     }
 
     @Override

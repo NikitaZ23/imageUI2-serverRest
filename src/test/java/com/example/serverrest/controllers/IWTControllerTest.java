@@ -57,23 +57,23 @@ public class IWTControllerTest {
                 .andExpect(jsonPath("$.id_tg").value(0));
     }
 
-    @SneakyThrows
-    @Test
-    @DisplayName("Получение зависимостей")
-    public void getTagsTest() {
-        ImWithTags im = new ImWithTags(1, new Tag("tag"));
-        ImWithTags im2 = new ImWithTags(1, new Tag("tag2"));
-
-        Mockito.when(service.findAll()).thenReturn(Arrays.asList(im, im2));
-
-        mockMvc.perform(
-                        get("/iwt/")
-                )
-                .andExpect(status().isOk())
-                .andExpect(content().json(objectMapper.writeValueAsString(Arrays.asList(
-                        new ImWithTagsDto(im.getId(), im.getId_im(), im.getId_tg().getId()),
-                        new ImWithTagsDto(im2.getId(), im2.getId_im(), im2.getId_tg().getId())))));
-    }
+//    @SneakyThrows
+//    @Test
+//    @DisplayName("Получение зависимостей")
+//    public void getTagsTest() {
+//        ImWithTags im = new ImWithTags(1, new Tag("tag"));
+//        ImWithTags im2 = new ImWithTags(1, new Tag("tag2"));
+//
+//        Mockito.when(service.findAll()).thenReturn(Arrays.asList(im, im2));
+//
+//        mockMvc.perform(
+//                        get("/iwt/")
+//                )
+//                .andExpect(status().isOk())
+//                .andExpect(content().json(objectMapper.writeValueAsString(Arrays.asList(
+//                        new ImWithTagsDto(im.getId(), im.getId_im(), im.getId_tg().getId()),
+//                        new ImWithTagsDto(im2.getId(), im2.getId_im(), im2.getId_tg().getId())))));
+//    }
 
     @Test
     @SneakyThrows

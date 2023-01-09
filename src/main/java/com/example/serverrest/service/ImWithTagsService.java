@@ -20,7 +20,7 @@ public interface ImWithTagsService {
 
     void createIWT(int id_im, List<String> tags);
 
-    void updateIWT(int id_im, List<String> tags);
+    Iterable<ImWithTags> updateIWT(int id_im, List<String> tags);
 
     ImWithTags createIWT(CreateIWTRequest request);
 

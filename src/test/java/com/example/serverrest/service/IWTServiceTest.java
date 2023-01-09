@@ -14,10 +14,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
@@ -115,6 +112,18 @@ public class IWTServiceTest {
 
         assertThat(iwt2).isEqualTo(iwt1);
     }
+
+//    @Test
+//    @DisplayName("Проверка создания зависимостей")
+//    public void createDependencesTest(){
+//        int id_im = 1;
+//        List<String> list = new ArrayList<>();
+//
+//        list.add("tag1");
+//        list.add("tag2");
+//
+//        Mockito.when(repository.save(Mockito.any())).thenReturn(iwt1);
+//    }
 
     @Test
     @DisplayName("Проверка удаления зависимости")

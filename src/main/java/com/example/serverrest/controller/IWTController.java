@@ -68,18 +68,11 @@ public class IWTController {
         return mapper.map(serviceImp.createIWT(request));
     }
 
-    @PostMapping("/{id}")
-    @ResponseStatus(code = HttpStatus.OK)
-    public void createDependences(@Valid @RequestBody final List<String> list,
-                                @PathVariable("id") final int id) {
-        serviceImp.createIWT(id, list);
-    }
-
     @PutMapping("/{id}")
     @ResponseStatus(code = HttpStatus.OK)
-    public void updateDependences(@Valid @RequestBody final List<String> list,
+    public Iterable<ImWithTagsDto> updateDependences(@Valid @RequestBody final List<String> list,
                                   @PathVariable("id") final int id) {
-        serviceImp.updateIWT(id, list);
+        return mapper.map(serviceImp.updateIWT(id, list));
     }
 
     @DeleteMapping("/{uuid}")

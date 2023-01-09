@@ -68,7 +68,10 @@ public class ImageServiceImp implements ImageService {
         byte[] bytes = multipartFile.getBytes();
         String name = multipartFile.getOriginalFilename();
 
-        File file = new File("pictures/" + name);
+        File file = new File("pictures");
+        file.mkdir();
+        file = new File("pictures", name);
+        file.createNewFile();
 
         BufferedOutputStream stream =
                 new BufferedOutputStream(new FileOutputStream(file));
@@ -79,21 +82,6 @@ public class ImageServiceImp implements ImageService {
 
         return createImage(new CreateImageRequest(name), imaggaVision.getParseJson().getList());
     }
-
-//    @SneakyThrows
-//    @Override
-//    @Transactional
-//    public void createImage(MultiFileMemoryBuffer buffer, String fileName) {
-//        InputStream inputStream = buffer.getInputStream(fileName);
-//        System.out.println(fileName);
-//
-//        File file = new File("./pictures/" + fileName);
-//
-//        FileUtils.copyInputStreamToFile(inputStream, file);
-//        ImaggaVision imaggaVision = new ImaggaVision(file.getPath());
-//
-//        createImage(new CreateImageRequest(fileName), imaggaVision.getParseJson().getList());
-//    }
 
     @Override
     @Transactional
